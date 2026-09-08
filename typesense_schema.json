@@ -1,0 +1,31 @@
+{
+  "name": "materials_v1",
+  "token_separators": ["-", "/", "_"],
+  "symbols_to_index": ["&", "+", "#"],
+  "fields": [
+    {"name": "materialId", "type": "string", "index": false},
+    {"name": "categoryName", "type": "string", "index": false},
+    {"name": "brandName", "type": "string", "index": false},
+    {"name": "productName", "type": "string", "index": false},
+    {"name": "productSpecification", "type": "string", "index": false},
+    {"name": "companyERPCode", "type": "string", "index": false},
+    {"name": "source", "type": "string", "facet": true},
+    {"name": "categoryNameNormalized", "type": "string", "stem": true},
+    {"name": "brandNameNormalized", "type": "string", "facet": true},
+    {"name": "productNameNormalized", "type": "string", "stem": true},
+    {"name": "productSpecificationNormalized", "type": "string"},
+    {"name": "companyERPCodeNormalized", "type": "string[]", "optional": true},
+    {"name": "modelTokens", "type": "string[]", "infix": true, "optional": true},
+    {"name": "numericTokens", "type": "string[]", "facet": true, "optional": true},
+    {"name": "allTextNormalized", "type": "string", "index": false},
+    {"name": "physicalFingerprint", "type": "string", "index": false},
+    {
+      "name": "embedding",
+      "type": "float[]",
+      "num_dim": 384,
+      "vec_dist": "cosine",
+      "optional": true,
+      "hnsw_params": {"ef_construction": 200, "M": 16}
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "brg": "bearing",
+  "mtr": "motor",
+  "assy": "assembly",
+  "ss": "stainless steel",
+  "ms": "mild steel",
+  "cs": "carbon steel",
+  "gi": "galvanized iron",
+  "al": "aluminium",
+  "dia": "diameter",
+  "od": "outer diameter",
+  "id": "inner diameter",
+  "sqmm": "square millimetre",
+  "nos": "number",
+  "pc": "piece",
+  "pcs": "piece"
+}

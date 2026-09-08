@@ -1,0 +1,90 @@
+{
+  "data": {
+    "primary_master": "materials_master.csv",
+    "secondary_master": "materials_temp.csv",
+    "evaluation_file": "eval_queries.csv",
+    "required_columns": [
+      "materialId",
+      "categoryName",
+      "brandName",
+      "productName",
+      "productSpecification",
+      "companyERPCode"
+    ],
+    "chunksize": 10000
+  },
+  "embedding": {
+    "model": "BAAI/bge-small-en-v1.5",
+    "dimension": 384,
+    "batch_size": 256,
+    "evaluation_batch_size": 128,
+    "normalize_embeddings": true,
+    "device": "cpu"
+  },
+  "typesense": {
+    "base_url_env": "TYPESENSE_URL",
+    "protocol": "http",
+    "host": "localhost",
+    "port": 8108,
+    "api_key_env": "TYPESENSE_API_KEY",
+    "collection_alias": "materials",
+    "connection_timeout_seconds": 30,
+    "import_timeout_seconds": 300,
+    "import_retries": 12,
+    "import_retry_delay_seconds": 15,
+    "import_max_retry_delay_seconds": 60,
+    "import_batch_size": 100,
+    "import_progress_every": 5000
+  },
+  "search": {
+    "query_by": [
+      "modelTokens",
+      "productNameNormalized",
+      "brandNameNormalized",
+      "productSpecificationNormalized",
+      "categoryNameNormalized"
+    ],
+    "query_by_weights": [127, 100, 70, 50, 20],
+    "num_typos": [0, 2, 1, 1, 1],
+    "prefix": [false, true, true, false, true],
+    "infix": ["always", "off", "off", "off", "off"],
+    "vector_alpha": 0.2,
+    "candidate_k": 150,
+    "master_candidate_k": 150,
+    "temp_candidate_k": 150,
+    "structured_candidate_k": 40,
+    "brand_candidate_k": 40,
+    "max_model_queries": 3,
+    "hnsw_ef": 128,
+    "top_k": 10,
+    "confidence_threshold": 0.55,
+    "rerank_hybrid_matches": true,
+    "drop_tokens_threshold": 100,
+    "primary_confidence_threshold": 0.9,
+    "primary_margin_threshold": 0.08,
+    "primary_source_bonus_strong": 0.1,
+    "primary_source_bonus_weak": 0.02,
+    "min_master_results": 3,
+    "min_temp_results": 1,
+    "max_temp_results_when_primary_strong": 3,
+    "deduplicate_physical_fingerprints": false,
+    "adaptive_cross_encoder": false,
+    "cross_encoder_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "cross_encoder_weight": 0.25,
+    "rules": {
+      "exact_erp_bonus": 0.35,
+      "exact_model_bonus": 0.22,
+      "exact_model_retrieval_bonus": 0.18,
+      "brand_match_bonus": 0.1,
+      "brand_filtered_retrieval_bonus": 0.06,
+      "brand_conflict_penalty": 0.25,
+      "numeric_coverage_bonus": 0.15,
+      "exact_numeric_retrieval_bonus": 0.1,
+      "numeric_conflict_penalty": 0.35
+    }
+  },
+  "normalization": {
+    "remove_commercial_noise": true,
+    "generic_brands": ["", "generic", "na", "n/a", "none", "unbranded"]
+  }
+}
